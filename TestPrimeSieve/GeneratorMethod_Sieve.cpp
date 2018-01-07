@@ -22,6 +22,17 @@ HRESULT CGeneratorMethod_Sieve::DoGeneration()
 		{
 			return;
 		}
+		if (oSieveEntry.IsMarkedAsComposite())
+		{
+			// If this number is already marked as a composite, then there's no point in filtering for it; 
+			// all the multiple values will be marked by the previous number(s) for which this is a multiple.
+			return;
+		}
+		if (oSieveEntry.m_nSieveIndex * 2 >= oDataArray.size())
+		{
+			// No multiple will be in range of array
+			return;
+		}
 
 		auto nCurrentMultiple = 2 * oSieveEntry.m_nSieveIndex;
 		while (nCurrentMultiple < oDataArray.size())
